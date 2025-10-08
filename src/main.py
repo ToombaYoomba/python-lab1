@@ -1,20 +1,20 @@
-from src.power import power_function
-from src.constants import SAMPLE_CONSTANT
+from src.calc_polish import calc_polish
+from src.parse import parse
+from src.to_polish import to_polish
 
 
 def main() -> None:
-    """
-    Обязательнная составляющая программ, которые сдаются. Является точкой входа в приложение
-    :return: Данная функция ничего не возвращает
-    """
+    expression = input()
 
-    target, degree = map(int, input("Введите два числа разделенные пробелом: ").split(" "))
+    pa = parse(expression)
+    print(f"\nпарсинг: {parse(expression)} \n")
 
-    result = power_function(target=target, power=degree)
+    polish = to_polish(pa)
+    print(f"перевод в польскую: {polish} \n")
 
-    print(result)
+    ans = calc_polish(polish)
+    print(ans)
 
-    print(SAMPLE_CONSTANT)
 
 if __name__ == "__main__":
     main()
