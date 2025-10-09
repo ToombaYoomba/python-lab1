@@ -45,7 +45,8 @@ def to_polish(exp: list[Token]) -> list[Token]:
                         pop(st)
                         # print(pos, st)
                 elif (
-                    hierarchy[m[0]] > hierarchy[peek(st)[0]]):  # нормально ложится по иерархии
+                    hierarchy[m[0]] > hierarchy[peek(st)[0]]
+                ):  # нормально ложится по иерархии
                     push(st, m)
                     # print(pos, st)
                 else:  # вытесняет по иерархии
