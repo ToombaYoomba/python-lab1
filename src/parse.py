@@ -2,6 +2,14 @@ from src.constants import Token, TOKEN_RE
 from src.Errors import CalcError
 
 def parse(exp: str) -> list[Token]:
+    """
+    Парсит строку на токены
+
+    Существуют токены чисел и токены операций
+    Всегда парсит знак в плотную к числу, как унарный
+    Возвращает строку токенов
+
+    """
     if len(exp)==0 or len(exp.strip())==0:
         raise CalcError("Пустой ввод")
 
@@ -35,4 +43,4 @@ def parse(exp: str) -> list[Token]:
     # out.append(("EOF", None))
     return out
 
-# print(parse(""))
+# print(parse("1/*1"))

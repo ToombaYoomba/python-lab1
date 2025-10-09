@@ -4,9 +4,20 @@ from src.Errors import CalcError
 
 
 def calc(a: Token, b: Token, m: Token) -> Token:
+    """
+    Подсчитывает выражение из 2-х операндов и одной операции
+
+    На вход получает два токена операнда и один токен операции
+    Проходится по всем существующим операциям, при встрече нужной, выполняет её
+    На выход выдаёт токен операнда
+    """
     x: float = a[1]
     y: float = b[1]
     op = m[0]
+
+    if op not in "+-//**%":
+        raise CalcError("Использование несуществующей операции", op)
+    
     ans: float = None
 
     if op == "+":
@@ -19,7 +30,7 @@ def calc(a: Token, b: Token, m: Token) -> Token:
         ans = x * y
 
     elif op == "**":
-        ans = x**y
+        ans = x ** y
 
     elif op in "//%":
         if y == 0:
@@ -36,8 +47,6 @@ def calc(a: Token, b: Token, m: Token) -> Token:
             else:
                 raise CalcError(f"Использование {op} не с целыми числами {x} и {y}")
 
-    if ans is None:
-        raise CalcError("Использование несуществующей операции", op)
 
     ans_token: Token = ("NUM", float(ans))
 

@@ -1,10 +1,20 @@
 from src.constants import Token, hierarchy
-from src.Errors import CalcError, check_mistakes
 from src.stack import push, pop, peek, is_empty
 
 
 def to_polish(exp: list[Token]) -> list[Token]:
-    check_mistakes(exp)
+    """
+    Переводит список токенов в обратную польскую запись
+
+
+    Проходится по списку токенов (изначальное распаршенное выражение)
+    При встрече операнда закидывает его в конечною строку
+    При встрече операнда закидывает его в стек, если его приоритет в hyerarchy выше
+    Иначе вытесняет его из стека, а вытесненная операция идёт в конечную строку
+    При встрече закрывающей скобки выкидывает все операции до первой открывающей скобки
+    Потом добавляет все оставшиеся операции в стэке, пока он не is_empty (пустой)
+    На выход выдаёт список токенов
+    """
 
     pos = 0
     out: list[Token] = []
@@ -27,25 +37,15 @@ def to_polish(exp: list[Token]) -> list[Token]:
                         push(st, m)
                         # print(pos, st)
                     else:
-                        print(") found")
-                        c: int = 0
+                        # print(") found")
                         while peek(st)[0] != "(":
                             out.append(peek(st))
                             pop(st)
-                            c += 1
                             # print(pos, st)
-                        if c == 0:
-                            if exp[pos - 1][0] == "NUM":
-                                if exp[pos - 1][1] < 0 and exp[pos - 2][0] == "(":
-                                    pass
-
-                                else:
-                                    raise CalcError("Отсутствие операндов в скобке")
                         pop(st)
                         # print(pos, st)
                 elif (
-                    hierarchy[m[0]] > hierarchy[peek(st)[0]]
-                ):  # нормально ложится по иерархии
+                    hierarchy[m[0]] > hierarchy[peek(st)[0]]):  # нормально ложится по иерархии
                     push(st, m)
                     # print(pos, st)
                 else:  # вытесняет по иерархии
