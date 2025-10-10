@@ -1,6 +1,6 @@
 from src.calc_polish import calc_polish
-from src.parse import parse
 from src.errors import check_mistakes
+from src.parse import parse
 from src.to_polish import to_polish
 
 
