@@ -6,7 +6,6 @@ from src.parse import parse
 from src.to_polish import to_polish
 
 
-#push
 @pytest.mark.parametrize(
         "start, res, expectation",
         [
@@ -17,5 +16,6 @@ from src.to_polish import to_polish
 )
 def test_to_polish(start, res, expectation):
     with expectation:
+        print(start)
         a = to_polish(start)
         assert a == res

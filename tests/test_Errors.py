@@ -2,7 +2,7 @@ import pytest
 from contextlib import nullcontext as does_not_raise
 
 from src.parse import parse
-from src.Errors import CalcError, check_mistakes
+from src.errors import CalcError, check_mistakes
 
 @pytest.mark.parametrize(
         "res, expectation",
@@ -15,12 +15,13 @@ from src.Errors import CalcError, check_mistakes
             (parse("1-1"), pytest.raises(CalcError)),
             (parse("1+1"), pytest.raises(CalcError)),
             (parse("1/*1"), pytest.raises(CalcError)),
+            (parse("1* *1"), pytest.raises(CalcError)),
+
             (parse("1*1"), does_not_raise()),
             (parse("1**1"), does_not_raise()),
-            (parse("1* *1"), pytest.raises(CalcError)),
         ]
 )
-def test_opers(res, expectation):
+def test_opers_mistakes(res, expectation):
     with expectation:
         check_mistakes(res)
         assert 1 == 1
@@ -33,13 +34,14 @@ def test_opers(res, expectation):
             (parse("((1 + 1)"), pytest.raises(CalcError)),
             (parse("2(*1)"), pytest.raises(CalcError)),
             (parse("(2*)1"), pytest.raises(CalcError)),
+
             (parse("1 + (1)"), does_not_raise()),
             (parse("1 + (-1)"), does_not_raise()),
             (parse("1 + ((-1))"), does_not_raise()),
             (parse("1 + ((1))"), does_not_raise()),
         ]
 )
-def test_brackets(res, expectation):
+def test_brackets_mistakes(res, expectation):
     with expectation:
         check_mistakes(res)
         assert 1 == 1

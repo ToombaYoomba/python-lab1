@@ -2,7 +2,7 @@ from contextlib import nullcontext as does_not_raise
 
 import pytest
 
-from src.Errors import CalcError
+from src.errors import CalcError
 from src.parse import parse
 
 
@@ -25,10 +25,11 @@ def test_parse(ini, res, expectation):
         "res, expectation",
         [
             ("", pytest.raises(CalcError)),
-            ("          ", pytest.raises(CalcError))
+            ("          ", pytest.raises(CalcError)),
+            ("1 d 2", pytest.raises(CalcError))
         ]
 )
-def test_0_parse(res, expectation):
+def test_bad_parse(res, expectation):
     with expectation:
         parse(res)
         assert 1 == 1

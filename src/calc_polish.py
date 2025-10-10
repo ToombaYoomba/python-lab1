@@ -1,5 +1,5 @@
 from src.constants import Token
-from src.Errors import CalcError
+from src.errors import CalcError
 from src.stack import push, pop
 from src.calc import calc
 
@@ -16,27 +16,27 @@ def calc_polish(exp: list[Token]) -> float:
     После прохода по всему выражению оставшийся операнд достаёт из стэка и округляет его значение
     Возвращает округлённое число
     """
-    if exp == []:
+    if exp == []:  # на всякий случай перед подсчётом польской записи
         raise CalcError("Пустой ввод токенов при подсчёте польской")
 
     pos = 0
-    out: float = None
-    st: list[Token] = []
+    out: float = None  # результат функции
+    st: list[Token] = []  # стэк для чисел
 
     while pos < len(exp):
         m = exp[pos]
 
-        if m[0] == "NUM":
+        if m[0] == "NUM":  # ввод в стэк числа
             push(st, m)
             # print(pos, st)
 
-        elif m[0] != "NUM":
+        elif m[0] != "NUM":  # обработка операндов
             if len(exp) < 2:
-                raise CalcError(
+                raise CalcError(  # на всякий случай для проблем с несколькими операциями подряд
                     "Слишком мало операндов для операции при подсчёте польской"
                 )
 
-            else:
+            else:  # вычисление операции между двумя числами
                 b = pop(st)
                 a = pop(st)
                 res = calc(a, b, m)
@@ -45,6 +45,6 @@ def calc_polish(exp: list[Token]) -> float:
 
         pos += 1
 
-    out = st[0][1]
+    out = st[0][1]  # ответ
 
     return round(out, 6)

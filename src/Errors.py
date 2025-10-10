@@ -14,21 +14,26 @@ def check_mistakes(exp: list[Token]) -> None:
     Ничего не возвращает, может только возвести ошибку
     """
 
+    # примеры токенов скобок
     brck_l_example: Token = ("(", None)
     brck_r_example: Token = (")", None)
 
     if exp == []:
-        raise CalcError("Пустой ввод токенов при вереводе в польскую")
+        raise CalcError(
+            "Пустой ввод токенов при вереводе в польскую"
+        )  # на всякий случай проверка перед переводом в польскую запись
 
     if exp.count(brck_l_example) != exp.count(brck_r_example):
         raise CalcError("Не совпадает количество открывающих и закрвывающих скобок")
 
+    # для проверок без учёта скобок
     exp_no_brck = exp.copy()
 
     for item in exp:
         if item[0] in "()":
             exp_no_brck.remove(item)
 
+    # проблемы, связанные с несколькими операндами / операциями
     if len(exp_no_brck) < 2 and exp_no_brck[0][0] != "NUM":
         raise CalcError("Слишком мало операндов")
 
@@ -40,6 +45,8 @@ def check_mistakes(exp: list[Token]) -> None:
             raise CalcError("Подряд два оператора")
         elif exp_no_brck[i][1] is None and exp_no_brck[i + 1][1] is None:
             raise CalcError("Подряд два операнда")
+
+    # проблемы, связанные с операциями / операндами перед и после скобок
 
     for i in range(len(exp) - 1):
         if exp[i][0] == "NUM" and exp[i + 1][0] == "(":

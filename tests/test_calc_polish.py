@@ -6,7 +6,6 @@ from src.parse import parse
 from src.calc_polish import calc_polish
 
 
-#push
 @pytest.mark.parametrize(
         "start, res, expectation",
         [

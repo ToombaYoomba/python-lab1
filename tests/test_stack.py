@@ -19,7 +19,7 @@ def test_push(start_st, add_st, res, expectation):
         assert start_st == res
 
 
-#pop tests
+#pop
 @pytest.mark.parametrize(
         "start_st, res, res_st, expectation",
         [
