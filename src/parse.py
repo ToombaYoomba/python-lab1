@@ -29,10 +29,11 @@ def parse(exp: str) -> list[Token]:
 
         # обратботка знака с длиной больше одного
         if len(t) > 1:
-            if t[1:].isdigit():  # число с унарным знаком
+            if t.isdigit() or t[1:].isdigit:  # число с унарным знаком
                 out.append(("NUM", float(t)))  # токен числа
             else:  # операции // **
                 out.append((t, None))
+                
 
         elif t.isdigit():  # обычное число
             out.append(("NUM", float(t)))

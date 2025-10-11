@@ -17,12 +17,12 @@ def main() -> None:
     expression = input("Введите математическое выражение: ")  # входное выражение
 
     pa = parse(expression)  # парсинг
-    # print(f"\nпарсинг: {parse(expression)} \n")
+    print(f"\nпарсинг: {parse(expression)} \n")
 
     check_mistakes(pa)  # проверка ошибок
 
     polish = to_polish(pa)  # перевод в польскую запись
-    # print(f"перевод в польскую: {polish} \n")
+    print(f"перевод в польскую: {polish} \n")
 
     ans = calc_polish(polish)  # вычисление выражения
     print(f"Результат вычислений: {ans}")
