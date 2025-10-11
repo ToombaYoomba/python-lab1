@@ -42,9 +42,9 @@ def check_mistakes(exp: list[Token]) -> None:
 
     for i in range(len(exp_no_brck) - 1):
         if exp_no_brck[i][0] == "NUM" and exp_no_brck[i + 1][0] == "NUM":
-            raise CalcError("Подряд два оператора")
-        elif exp_no_brck[i][1] is None and exp_no_brck[i + 1][1] is None:
             raise CalcError("Подряд два операнда")
+        elif exp_no_brck[i][1] is None and exp_no_brck[i + 1][1] is None:
+            raise CalcError("Подряд два оператора")
 
     # проблемы, связанные с операциями / операндами перед и после скобок
 
